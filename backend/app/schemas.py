@@ -1,28 +1,25 @@
 from flask_restx import fields
 from app.extensions import api
-from app.models.category import CategoryType
-from app.models.transaction import PaymentMethod, TransactionType
+from flask_restx.fields import Raw
 
-transaction_model = api.model('Transaction', {
-    'id': fields.Integer(readonly=True),
-    'amount': fields.Float(required=True),
-    'transaction_type': fields.String(
-        required=True, 
-        enum=[t.value for t in TransactionType]
-    ),
-    'payment_method': fields.String(
-        required=True, 
-        enum=[m.value for m in PaymentMethod]
-    ),
-    'description': fields.String(),
-    'transaction_date': fields.DateTime(required=True),
-    'category_id': fields.Integer(required=True)
-})
+class EnumField(Raw):
+    def format(self, value):
+        return value.value
 
 category_model = api.model('Category', {
     'id': fields.Integer(readonly=True),
     'name': fields.String(required=True),
-    'type': fields.String(required=True, enum=[t.value for t in CategoryType])
+    'type': EnumField(required=True, description="Tipo da categoria (income ou expense)")
+})
+
+transaction_model = api.model('Transaction', {
+    'id': fields.Integer(readonly=True),
+    'amount': fields.Float(required=True),
+    'transaction_type': EnumField(required=True, description="Tipo da transação (income ou expense)"),
+    'payment_method': EnumField(required=True, description="Método de pagamento (pix, card ou cash)"),
+    'description': fields.String(),
+    'transaction_date': fields.DateTime(required=True),
+    'category': fields.Nested(category_model, description="Detalhes da categoria")
 })
 
 pagination_model = api.model('Pagination', {

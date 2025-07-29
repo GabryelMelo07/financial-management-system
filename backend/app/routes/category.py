@@ -1,6 +1,6 @@
 from flask_restx import Resource, Namespace
 from app.models.category import Category
-from app.schemas.transaction_schema import category_model
+from app.schemas import category_model
 from app.extensions import db
 
 ns = Namespace('categories', description='Category operations')

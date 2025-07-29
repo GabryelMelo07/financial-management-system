@@ -1,6 +1,6 @@
 flask
+flask-cors
 flask-restx
-flask-session
 flask-migrate
 flask-sqlalchemy
 mysqlclient

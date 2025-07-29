@@ -1,7 +1,6 @@
-from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
 from flask_restx import Api
-from flask_session import Session
+from flask_migrate import Migrate
+from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 migrate = Migrate()
@@ -11,4 +10,3 @@ api = Api(
     description='API criada para gerenciamento de finanças de um comércio',
     doc='/swagger/'
 )
-sess = Session()

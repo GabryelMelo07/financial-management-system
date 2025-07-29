@@ -1,8 +1,8 @@
-"""Add transaction and category
+"""initial
 
-Revision ID: 8b09bfafc83f
-Revises: 08e5529f389b
-Create Date: 2025-07-23 06:56:30.354382
+Revision ID: cd4e2c8192fd
+Revises: 
+Create Date: 2025-07-29 04:50:01.224266
 
 """
 from alembic import op
@@ -10,8 +10,8 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '8b09bfafc83f'
-down_revision = '08e5529f389b'
+revision = 'cd4e2c8192fd'
+down_revision = None
 branch_labels = None
 depends_on = None
 
@@ -21,6 +21,7 @@ def upgrade():
     op.create_table('category',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=50), nullable=False),
+    sa.Column('type', sa.Enum('INCOME', 'EXPENSE', name='transactiontype'), nullable=False),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('name')
     )
