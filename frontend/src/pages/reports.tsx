@@ -406,76 +406,6 @@ export default function Reports() {
         </CardContent>
       </Card>
 
-      {/* Annual Income and Expense Bar Chart (Anual) */}
-      <Card className="col-span-1 md:col-span-2 lg:col-span-3">
-        <CardHeader>
-          <CardTitle>Receitas e Despesas Anuais</CardTitle>
-          <CardDescription>
-            Visão geral de receitas e despesas por mês do ano atual
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <ChartContainer config={chartConfig} className="min-h-[250px] w-full">
-            <BarChart
-              accessibilityLayer
-              data={transformedAnnualData}
-              margin={{
-                top: 20,
-              }}
-            >
-              <CartesianGrid vertical={false} />
-              <XAxis
-                dataKey="month"
-                tickLine={false}
-                tickMargin={10}
-                axisLine={false}
-              />
-              <YAxis
-                tickFormatter={(value) => formatCurrencyBRL(value)}
-                width={80}
-              />{' '}
-              <ChartTooltip
-                cursor={false}
-                content={
-                  <ChartTooltipContent
-                    formatter={(value: any, name: string | number) => {
-                      const label =
-                        name === 'receita' ? ' Receita' : ' Despesa';
-                      return [`${formatCurrencyBRL(Number(value))}`, label] as [
-                        string,
-                        string
-                      ];
-                    }}
-                  />
-                }
-              />
-              <Bar dataKey="receita" fill="#22c55e" radius={4}>
-                <LabelList
-                  position="top"
-                  offset={12}
-                  className="fill-foreground"
-                  fontSize={12}
-                  formatter={(value: number) =>
-                    value === 0 ? '' : formatCurrencyBRL(value)
-                  }
-                />
-              </Bar>
-              <Bar dataKey="despesa" fill="#ef4444" radius={4}>
-                <LabelList
-                  position="top"
-                  offset={12}
-                  className="fill-foreground"
-                  fontSize={12}
-                  formatter={(value: number) =>
-                    value === 0 ? '' : formatCurrencyBRL(value)
-                  }
-                />
-              </Bar>
-            </BarChart>
-          </ChartContainer>
-        </CardContent>
-      </Card>
-
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Gráfico de Pizza - Receitas por Categoria */}
         <Card className="flex flex-col">
@@ -593,6 +523,76 @@ export default function Reports() {
           </CardContent>
         </Card>
       </div>
+
+      {/* Annual Income and Expense Bar Chart (Anual) */}
+      <Card className="col-span-1 md:col-span-2 lg:col-span-3">
+        <CardHeader>
+          <CardTitle>Receitas e Despesas Anuais</CardTitle>
+          <CardDescription>
+            Visão geral de receitas e despesas por mês do ano atual
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <ChartContainer config={chartConfig} className="min-h-[250px] w-full">
+            <BarChart
+              accessibilityLayer
+              data={transformedAnnualData}
+              margin={{
+                top: 20,
+              }}
+            >
+              <CartesianGrid vertical={false} />
+              <XAxis
+                dataKey="month"
+                tickLine={false}
+                tickMargin={10}
+                axisLine={false}
+              />
+              <YAxis
+                tickFormatter={(value) => formatCurrencyBRL(value)}
+                width={80}
+              />{' '}
+              <ChartTooltip
+                cursor={false}
+                content={
+                  <ChartTooltipContent
+                    formatter={(value: any, name: string | number) => {
+                      const label =
+                        name === 'receita' ? ' Receita' : ' Despesa';
+                      return [`${formatCurrencyBRL(Number(value))}`, label] as [
+                        string,
+                        string
+                      ];
+                    }}
+                  />
+                }
+              />
+              <Bar dataKey="receita" fill="#22c55e" radius={4}>
+                <LabelList
+                  position="top"
+                  offset={12}
+                  className="fill-foreground"
+                  fontSize={12}
+                  formatter={(value: number) =>
+                    value === 0 ? '' : formatCurrencyBRL(value)
+                  }
+                />
+              </Bar>
+              <Bar dataKey="despesa" fill="#ef4444" radius={4}>
+                <LabelList
+                  position="top"
+                  offset={12}
+                  className="fill-foreground"
+                  fontSize={12}
+                  formatter={(value: number) =>
+                    value === 0 ? '' : formatCurrencyBRL(value)
+                  }
+                />
+              </Bar>
+            </BarChart>
+          </ChartContainer>
+        </CardContent>
+      </Card>
     </div>
   );
 }
