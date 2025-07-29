@@ -55,9 +55,6 @@ jspm_packages/
 .env.*
 !.env.example
 
-# vitepress build output
-**/.vitepress/dist
-
 # vitepress cache directory
 **/.vitepress/cache
 
@@ -87,3 +84,9 @@ vite.config.ts.timestamp-*
 *.njsproj
 *.sln
 *.sw?
+
+# Python
+venv/
+__pycache__/
+*.pyc
+flask_session/
