@@ -25,12 +25,12 @@ export default function DeleteConfirmationModal({
   transactionId,
 }: DeleteConfirmationModalProps) {
   const { triggerRefresh } = useRefreshContext();
-  
+
   const handleDelete = async () => {
     if (transactionId === null) return;
 
     try {
-      await api.delete(`/transactions/${transactionId}`);
+      await api.delete(`/api/transactions/${transactionId}`);
       onOpenChange(false);
       triggerRefresh();
     } catch (error) {
@@ -49,10 +49,18 @@ export default function DeleteConfirmationModal({
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
-          <Button variant="outline" onClick={() => onOpenChange(false)}>
+          <Button
+            variant="outline"
+            className="cursor-pointer"
+            onClick={() => onOpenChange(false)}
+          >
             Cancelar
           </Button>
-          <Button variant="destructive" onClick={handleDelete}>
+          <Button
+            variant="destructive"
+            className="cursor-pointer text-destructive-foreground hover:bg-destructive/75 hover:text-destructive-foreground/75"
+            onClick={handleDelete}
+          >
             Excluir
           </Button>
         </DialogFooter>

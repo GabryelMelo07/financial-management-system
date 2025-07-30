@@ -66,7 +66,7 @@ export default function Transactions() {
 
   const fetchTransactions = useCallback(async () => {
     try {
-      const response = await api.get('/transactions', {
+      const response = await api.get('/api/transactions', {
         params: {
           search: searchTerm || undefined,
           type: typeFilter || undefined,
@@ -90,7 +90,7 @@ export default function Transactions() {
 
   const fetchCategories = useCallback(async () => {
     try {
-      const response = await api.get('/categories');
+      const response = await api.get('/api/categories');
       setCategories(response.data);
     } catch (error: any) {
       console.error('Erro ao buscar categorias:', error);
@@ -142,7 +142,7 @@ export default function Transactions() {
       cell: ({ row }) => {
         const type = row.getValue('transaction_type') as 'income' | 'expense';
         const typeClasses = cn(
-          'px-2 py-1 rounded text-md font-medium w-fit whitespace-nowrap', // Adicionado whitespace-nowrap
+          'px-2 py-1 rounded text-md font-medium w-fit whitespace-nowrap',
           type === 'income'
             ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
             : 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
@@ -157,7 +157,7 @@ export default function Transactions() {
       header: 'Descrição',
       cell: ({ row }) => (
         <div className="font-medium text-left">
-          {row.getValue('description')}
+          {row.getValue('description') || 'Sem descrição'}
         </div>
       ),
     },
@@ -222,10 +222,10 @@ export default function Transactions() {
       id: 'actions',
       cell: ({ row }) => (
         <div className="flex space-x-1 justify-end">
-          <Button variant="ghost" size="icon" className="h-8 w-9" onClick={() => handleEditClick(row.original)}>
+          <Button variant="ghost" size="icon" className="h-8 w-9 cursor-pointer" onClick={() => handleEditClick(row.original)}>
             <Pen className="h-5 w-5" />
           </Button>
-          <Button variant="ghost" size="icon" className="h-8 w-9" onClick={() => handleDeleteClick(row.original.id)}>
+          <Button variant="ghost" size="icon" className="h-8 w-9 cursor-pointer" onClick={() => handleDeleteClick(row.original.id)}>
             <Trash2 className="h-5 w-5" />
           </Button>
         </div>
@@ -269,7 +269,7 @@ export default function Transactions() {
           <Button
             variant="destructive"
             onClick={clearFilters}
-            className="ml-auto text-destructive-foreground font-semibold"
+            className="ml-auto text-destructive-foreground font-semibold hover:bg-destructive/75 hover:text-destructive-foreground/75  cursor-pointer"
           >
             <XCircle className="h-4 w-4" />
             Remover Filtros

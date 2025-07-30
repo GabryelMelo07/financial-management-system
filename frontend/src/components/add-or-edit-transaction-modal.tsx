@@ -53,10 +53,19 @@ export default function AddOrEditTransactionModal({
   const [filteredCategories, setFilteredCategories] = useState<Category[]>([]);
   const { triggerRefresh } = useRefreshContext();
 
+  const clearForm = () => {
+    setType('income');
+    setCategory('');
+    setDescription('');
+    setAmount('');
+    setDate(new Date().toISOString().split('T')[0]);
+    setPaymentMethod('pix');
+  };
+
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await api.get('/categories');
+        const response = await api.get('/api/categories');
         setCategories(response.data);
       } catch (error) {
         console.error('Erro ao buscar categorias:', error);
@@ -78,12 +87,7 @@ export default function AddOrEditTransactionModal({
       setDate(transaction.transaction_date.split('T')[0]);
       setPaymentMethod(transaction.payment_method);
     } else {
-      setType('income');
-      setCategory('');
-      setDescription('');
-      setAmount('');
-      setDate(new Date().toISOString().split('T')[0]);
-      setPaymentMethod('pix');
+      clearForm();
     }
   }, [transaction]);
 
@@ -114,21 +118,14 @@ export default function AddOrEditTransactionModal({
 
       if (transaction) {
         // Modo edição
-        await api.put(`/transactions/${transaction.id}`, transactionData, {
-          headers: {
-            'Content-Type': 'application/json',
-          }
-        });
+        await api.put(`/api/transactions/${transaction.id}`, transactionData);
       } else {
         // Modo adição
-        await api.post('/transactions', transactionData, {
-          headers: {
-            'Content-Type': 'application/json',
-          }
-        });
+        await api.post('/api/transactions', transactionData);
       }
 
       onOpenChange(false);
+      clearForm();
       triggerRefresh();
     } catch (error) {
       console.error('Erro ao salvar transação:', error);
@@ -139,7 +136,9 @@ export default function AddOrEditTransactionModal({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent aria-describedby={undefined} className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>{transaction ? 'Editar Transação' : 'Adicionar Nova Transação'}</DialogTitle>
+          <DialogTitle>
+            {transaction ? 'Editar Transação' : 'Adicionar Nova Transação'}
+          </DialogTitle>
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -208,7 +207,6 @@ export default function AddOrEditTransactionModal({
               placeholder="Digite a descrição da transação"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              required
               className="resize-none"
               maxLength={255}
             />

@@ -28,7 +28,7 @@ export default function Navbar({
   currentPage: Page;
   setCurrentPage: (page: Page) => void;
 }) {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isTransactionModalOpen, setIsTransactionModalOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const { theme, toggleTheme } = useTheme();
 
@@ -76,7 +76,7 @@ export default function Navbar({
                         variant={
                           currentPage === item.id ? 'secondary' : 'ghost'
                         }
-                        className={`${
+                        className={`cursor-pointer ${
                           currentPage === item.id
                             ? 'bg-primary-foreground/20 primary-foreground'
                             : ''
@@ -94,8 +94,8 @@ export default function Navbar({
               <div className="flex items-center space-x-2">
                 <Button
                   variant="destructive"
-                  onClick={() => setIsModalOpen(true)}
-                  className="text-destructive-foreground font-semibold"
+                  onClick={() => setIsTransactionModalOpen(true)}
+                  className="font-semibold cursor-pointer text-destructive-foreground hover:bg-destructive/75 hover:text-destructive-foreground/75"
                 >
                   <Plus className="h-4 w-4 mr-2" />
                   Adicionar Transação
@@ -118,8 +118,8 @@ export default function Navbar({
       </div>
 
       <AddOrEditTransactionModal
-        open={isModalOpen}
-        onOpenChange={setIsModalOpen}
+        open={isTransactionModalOpen}
+        onOpenChange={setIsTransactionModalOpen}
         transaction={null}
       />
     </>

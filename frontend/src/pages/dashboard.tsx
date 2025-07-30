@@ -49,7 +49,7 @@ export default function Dashboard() {
 
   const fetchTransactions = useCallback(async () => {
     try {
-      const response = await api.get('/transactions/recent');
+      const response = await api.get('/api/transactions/recent');
       setRecentTransactions(response.data);
     } catch (error: any) {
       console.error('Erro ao buscar transações recentes:', error);
@@ -58,7 +58,7 @@ export default function Dashboard() {
 
   const fetchSummary = useCallback(async () => {
     try {
-      const response = await api.get('/transactions/summary', {
+      const response = await api.get('/api/transactions/summary', {
         params: {
           type: 'daily',
         },
@@ -206,7 +206,7 @@ export default function Dashboard() {
                         {translateTransactionType(transaction.transaction_type)}
                       </div>
                       <div>
-                        <p className="font-medium">{transaction.description}</p>
+                        <p className="font-medium">{transaction.description || 'Sem descrição'}</p>
                         <p className="text-sm text-muted-foreground">
                           {translateTransactionPaymentMethod(
                             transaction.payment_method
@@ -222,10 +222,10 @@ export default function Dashboard() {
                         {amountSign}
                         {formatCurrencyBRL(transaction.amount)}
                       </span>
-                      <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => handleEditClick(transaction)}>
+                      <Button variant="ghost" size="icon" className="h-8 w-9 cursor-pointer" onClick={() => handleEditClick(transaction)}>
                         <Pen className="h-5 w-5" />
                       </Button>
-                      <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => handleDeleteClick(transaction.id)}>
+                      <Button variant="ghost" size="icon" className="h-8 w-9 cursor-pointer" onClick={() => handleDeleteClick(transaction.id)}>
                         <Trash2 className="h-5 w-5" />
                       </Button>
                     </div>

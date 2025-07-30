@@ -84,7 +84,7 @@ export default function Reports() {
 
   const fetchSummaryData = useCallback(async () => {
     try {
-      const response = await api.get('/transactions/summary', {
+      const response = await api.get('/api/transactions/summary', {
         params: {
           type: 'monthly',
         },
@@ -97,7 +97,7 @@ export default function Reports() {
 
   const fetchChartsData = useCallback(async () => {
     try {
-      const response = await api.get<ChartsData>('/transactions/charts');
+      const response = await api.get<ChartsData>('/api/transactions/charts');
       setChartsData(response.data);
     } catch (error) {
       console.error('Erro ao buscar dados dos gráficos:', error);
