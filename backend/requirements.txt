@@ -1,0 +1,7 @@
+flask
+flask-cors
+flask-restx
+flask-migrate
+flask-sqlalchemy
+mysqlclient
+python-dotenv
