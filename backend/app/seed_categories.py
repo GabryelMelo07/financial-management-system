@@ -5,6 +5,8 @@ from app.models.transaction import TransactionType
 
 app = create_app()
 
+# Run with: python -m app.seed_categories
+
 # Listas fornecidas
 income_categories = [
     "Reparo de pneu - Moto",
@@ -12,7 +14,8 @@ income_categories = [
     "Reparo de pneu - Bicicleta",
     "Troca de pneu - Moto",
     "Troca de pneu - Carro",
-    "Carga em Bateria"
+    "Carga em Bateria",
+    "Outros"
 ]
 
 expense_categories = [
@@ -22,7 +25,8 @@ expense_categories = [
     "Internet",
     "Gasolina",
     "Academia",
-    "Farmácia"
+    "Farmácia",
+    "Outros"
 ]
 
 def insert_categories():
